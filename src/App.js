@@ -64,7 +64,15 @@ const App = () => {
                     <ModalAddPet open={open} setOpen={setOpen} addPet={addPet}/>
                 </>
             ) : (
-                <span>You dont have pet list</span>
+                <>
+                    <h2>You dont have pet list</h2>
+                    <ModalAddPet open={open} setOpen={setOpen} addPet={addPet}/>
+                    <Button
+                        onClick={() => handleOpen()}
+                        variant="contained">
+                       <h3>Add pet</h3> <AddIcon/>
+                    </Button>
+                </>
             )}
         </Container>
     )
