@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add'
 import petListFilter from './helpers/petListFilter'
 import petListSort from './helpers/petListSort'
 import ModalAddPet from './components/ModalAddPet/ModalAddPet'
+import uniqueKey from './helpers/uniqueKey'
 
 const App = () => {
     const [pets, setPets] = useState({pets: []})
@@ -49,7 +50,7 @@ const App = () => {
                         sort={sortMethod}
                     />
                     {petListSort(petListFilter(pets.pets, filterItems), sortMethod).map((pet) => {
-                        return <PetCard key={pet.name} petInfo={pet} killPet={killPet}/>
+                        return <PetCard key={uniqueKey()} petInfo={pet} killPet={killPet}/>
                     })}
                     <Button onClick={() => {
                         handleOpen()

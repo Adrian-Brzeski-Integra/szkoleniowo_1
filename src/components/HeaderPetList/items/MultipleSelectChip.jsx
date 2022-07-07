@@ -37,11 +37,9 @@ const MultipleSelectChip = ({ name, list, setFilter }) => {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 150 }}>
-        <InputLabel id="demo-multiple-chip-label">{name}</InputLabel>
+        <InputLabel >{name}</InputLabel>
         <Select
-          labelId="demo-multiple-chip-label"
           label={name}
-          id="demo-multiple-chip"
           multiple
           value={listItem}
           onChange={handleChange}

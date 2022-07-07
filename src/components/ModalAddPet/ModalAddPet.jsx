@@ -13,6 +13,13 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
     const [tempFood, setTempFood] = useState('')
     const [food, setFood] = useState([])
     const [age, setAge] = useState({text: 'Wiek', status: false})
+
+    const stateReset = () => {
+        setTempFood('')
+        setFood([])
+        setAge({text: 'Wiek', status: false})
+    }
+
     const handleClose = () => {
         stateReset()
         setOpen(false)
@@ -23,12 +30,6 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
         addPet(createPet(e))
         e.target.reset()
         handleClose()
-    }
-
-    const stateReset = () => {
-        setTempFood('')
-        setFood([])
-        setAge({text: 'Wiek', status: false})
     }
 
     const createPet = (e) => {
@@ -51,16 +52,16 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
         }
     }
 
-    const ageValidation = (e) => {
-        if (!Number.isInteger(Number(e.target.value))) {
-            setAge({text: 'Wiek musi być liczbą całkowitą', status: true})
-        } else setAge({text: 'Wiek', status: false})
-    }
-
     const removeFood = (index) => {
         const cloneFood = [...food]
         cloneFood.splice(index, 1)
         setFood(cloneFood)
+    }
+
+    const ageValidation = (e) => {
+        if (!Number.isInteger(Number(e.target.value))) {
+            setAge({text: 'Wiek musi być liczbą całkowitą', status: true})
+        } else setAge({text: 'Wiek', status: false})
     }
 
     return (
@@ -89,12 +90,15 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
                         } id="fAddFood" variant="contained"><AddIcon/></Button>
                     </div>
                     {food.length > 0 && <ul>{food.map((item, index) => {
-                        return <li key={uniqueKey()}>{item}<Button variant="contained" color="error"
-                                                            onClick={() => removeFood(index)
-                                                            }><RemoveIcon/></Button>
+                        return <li key={uniqueKey()}>{item}
+                            <Button variant="contained" color="error"
+                                    onClick={() => removeFood(index)
+                                    }>
+                                <RemoveIcon/>
+                            </Button>
                         </li>
                     })}</ul>}
-                    <div className='btn__box'>
+                    <div className="btn__box">
                         <Button variant="contained" type="submit">DODAJ</Button>
                     </div>
                 </form>
