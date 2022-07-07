@@ -1,0 +1,14 @@
+@mixin commonUl {
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 4px;
+  row-gap: 4px;
+
+  li {
+    border: 1px solid black;
+    padding: 0 3px;
+  }
+}
