@@ -75,29 +75,66 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
                 <form onSubmit={(e) => {
                     handleSubmit(e)
                 }}>
-                    <TextField required id="fName" name="fName" label="Imię" variant="outlined"/>
-                    <TextField required type="number" id="fAge" name="fAge" label={age.text} variant="outlined"
-                               error={age.status}
-                               onChange={(e) => ageValidation(e)}/>
-                    <TextField required id="fSpecies" name="fSpecies" label="Gatunek" variant="outlined"/>
-                    <TextField required id="fPhoto" name="fPhoto" label="Url zdjęcia" variant="outlined"/>
+                    <TextField
+                        required
+                        id="fName"
+                        name="fName"
+                        label="Imię"
+                        variant="outlined"
+                    />
+                    <TextField
+                        required
+                        type="number"
+                        id="fAge"
+                        name="fAge"
+                        label={age.text}
+                        variant="outlined"
+                        error={age.status}
+                        onChange={(e) => ageValidation(e)}
+                    />
+                    <TextField
+                        required
+                        id="fSpecies"
+                        name="fSpecies"
+                        label="Gatunek"
+                        variant="outlined"
+                    />
+                    <TextField
+                        required
+                        id="fPhoto"
+                        name="fPhoto"
+                        label="Url zdjęcia"
+                        variant="outlined"
+                    />
                     <div id="foodInput__container">
-                        <TextField id="fFood" name="fFood" label="Jedzenie" variant="outlined" value={tempFood}
-                                   onChange={(e) => setTempFood(e.target.value)
-                                   }
+                        <TextField
+                            id="fFood"
+                            name="fFood"
+                            label="Jedzenie"
+                            variant="outlined"
+                            value={tempFood}
+                            onChange={(e) => setTempFood(e.target.value)}
                         />
-                        <Button onClick={() => handleAddFood()
-                        } id="fAddFood" variant="contained"><AddIcon/></Button>
+                        <Button
+                            onClick={() => handleAddFood()}
+                            id="fAddFood"
+                            variant="contained">
+                            <AddIcon/>
+                        </Button>
                     </div>
-                    {food.length > 0 && <ul>{food.map((item, index) => {
-                        return <li key={uniqueKey()}>{item}
-                            <Button variant="contained" color="error"
-                                    onClick={() => removeFood(index)
-                                    }>
-                                <RemoveIcon/>
-                            </Button>
-                        </li>
-                    })}</ul>}
+                    {food.length > 0 && <ul>
+                        {food.map((item, index) => {
+                            return (
+                                <li key={uniqueKey()}>
+                                    {item}
+                                    <Button variant="contained"
+                                            color="error"
+                                            onClick={() => removeFood(index)}>
+                                        <RemoveIcon/>
+                                    </Button>
+                                </li>
+                            )
+                        })}</ul>}
                     <div className="btn__box">
                         <Button variant="contained" type="submit">DODAJ</Button>
                     </div>

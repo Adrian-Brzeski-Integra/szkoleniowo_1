@@ -22,8 +22,18 @@ const HeaderPetList = ({petList, setFilter, setSort, sort}) => {
             <div className="sortList__container">
                 <h4>Sortowanie</h4>
                 <div className="btn__box">
-                    <Button id="ageBtn" onClick={(e) => handleBtn(e)} variant="contained">WIEK</Button>
-                    <Button id="nameBtn" onClick={(e) => handleBtn(e)} variant="contained">IMIE</Button>
+                    <Button
+                        id="ageBtn"
+                        onClick={(e) => handleBtn(e)}
+                        variant="contained">
+                        WIEK
+                    </Button>
+                    <Button
+                        id="nameBtn"
+                        onClick={(e) => handleBtn(e)}
+                        variant="contained">
+                        IMIE
+                    </Button>
                 </div>
             </div>
             <div className="filterList__container">

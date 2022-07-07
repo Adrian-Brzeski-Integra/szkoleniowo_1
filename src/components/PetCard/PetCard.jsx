@@ -12,7 +12,8 @@ const PetCard = ({petInfo, killPet}) => {
                 <span>Imię: {petInfo.name}</span>
                 <span>Wiek: {new Date().getFullYear() - petInfo.birthYear} lat</span>
                 <span>Gatunek: {petInfo.species}</span>
-                {petInfo.favFoods && <div><span>Ulubione jedzenie:</span>
+                {petInfo.favFoods && <div>
+                    <span>Ulubione jedzenie:</span>
                     <ul>
                         {petInfo.favFoods.map((food) => {
                             return <li key={food}>{food}</li>
@@ -21,7 +22,13 @@ const PetCard = ({petInfo, killPet}) => {
                 </div>
                 }
             </div>
-            <Button onClick={() => killPet(petInfo)} className="btn--del" variant="contained" color="error"><CloseIcon/></Button>
+            <Button
+                onClick={() => killPet(petInfo)}
+                className="btn--del"
+                variant="contained"
+                color="error">
+                <CloseIcon/>
+            </Button>
         </div>
     )
 }

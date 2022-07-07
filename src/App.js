@@ -40,7 +40,7 @@ const App = () => {
     }, [])
 
     return (
-        <Container maxWidth='md' id="App">
+        <Container maxWidth="md" id="App">
             {pets.pets.length > 0 ? (
                 <>
                     <HeaderPetList
@@ -49,13 +49,19 @@ const App = () => {
                         setSort={setSortMethod}
                         sort={sortMethod}
                     />
-                    {petListSort(petListFilter(pets.pets, filterItems), sortMethod).map((pet) => {
-                        return <PetCard key={uniqueKey()} petInfo={pet} killPet={killPet}/>
-                    })}
-                    <Button onClick={() => {
-                        handleOpen()
-                    }} className="btn--add" variant="contained"><AddIcon/></Button>
-                   <ModalAddPet open={open} setOpen={setOpen} addPet={addPet}/>
+                    {
+                        petListSort(petListFilter(pets.pets, filterItems), sortMethod)
+                            .map((pet) => {
+                                return <PetCard key={uniqueKey()} petInfo={pet} killPet={killPet}/>
+                            })
+                    }
+                    <Button
+                        onClick={() => handleOpen()}
+                        className="btn--add"
+                        variant="contained">
+                        <AddIcon/>
+                    </Button>
+                    <ModalAddPet open={open} setOpen={setOpen} addPet={addPet}/>
                 </>
             ) : (
                 <span>You dont have pet list</span>
