@@ -1,0 +1,60 @@
+$petInfo_height: 200px;
+
+.petInfo {
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 4px 42px 4px 4px;
+    border: 1px solid black;
+    margin-top: 0.5rem;
+
+    img {
+      width: 100%;
+
+      @media only screen and (min-width: 570px) {
+        height: $petInfo_height;
+        width: auto;
+      }
+    }
+
+    .petData {
+      &__box {
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem 1rem;
+        row-gap: 0.3rem;
+        font-size: 1.1rem;
+        min-height: $petInfo_height;
+
+        div {
+          margin-top: auto;
+        }
+
+        ul {
+          margin: 0.5rem 0 0 0;
+          padding: 0;
+          list-style-type: none;
+          display: flex;
+          flex-wrap: wrap;
+          column-gap: 4px;
+          row-gap: 4px;
+
+          li {
+            border: 1px solid black;
+            padding: 0 3px;
+          }
+        }
+      }
+
+    }
+
+    .btn--del {
+      position: absolute;
+      padding: 6px;
+      min-width: 25px;
+      top: 5px;
+      right: 4px;
+    }
+  }
+}
