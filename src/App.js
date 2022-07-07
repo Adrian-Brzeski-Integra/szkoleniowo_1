@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Container from '@mui/material/Container'
-
+import './App.scss'
 import HeaderPetList from './components/HeaderPetList/HeaderPetList'
 import PetCard from './components/PetCard/PetCard'
 import Button from '@mui/material/Button'
@@ -41,7 +41,7 @@ const App = () => {
                     {petListSort(petListFilter(pets.pets, filterItems), sortMethod).map((pet) => {
                         return <PetCard key={pet.name} petInfo={pet} killPet={killPet}/>
                     })}
-                    <Button variant="contained"><AddIcon/></Button>
+                    <Button className="btn--add" variant="contained"><AddIcon/></Button>
                 </>
             ) : (
                 <span>You dont have pet list</span>

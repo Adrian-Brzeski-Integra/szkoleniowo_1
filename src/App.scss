@@ -1,0 +1,11 @@
+.App{
+  display: flex;
+  flex-direction: column;
+
+  .btn{
+    &--add{
+      width: 50px;
+      margin: 1rem auto;
+    }
+  }
+}
