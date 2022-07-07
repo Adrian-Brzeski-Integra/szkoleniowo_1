@@ -3,6 +3,7 @@ import Button from '@mui/material/Button'
 import './HeaderPetList.scss'
 import MultipleSelectChip from './items/MultipleSelectChip'
 import PropTypes from 'prop-types'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 
 const HeaderPetList = ({petList, setFilter, setSort, sort}) => {
     const handleBtn = (e) => {
@@ -27,12 +28,16 @@ const HeaderPetList = ({petList, setFilter, setSort, sort}) => {
                         onClick={(e) => handleBtn(e)}
                         variant="contained">
                         WIEK
+                        {sort === 'age_up' && <ArrowUpwardIcon className="arrow"/>}
+                        {sort === 'age_down' && <ArrowUpwardIcon className="arrow arrow--down"/>}
                     </Button>
                     <Button
                         id="nameBtn"
                         onClick={(e) => handleBtn(e)}
                         variant="contained">
                         IMIE
+                        {sort === 'name_up' && <ArrowUpwardIcon className="arrow"/>}
+                        {sort === 'name_down' && <ArrowUpwardIcon className="arrow arrow--down"/>}
                     </Button>
                 </div>
             </div>

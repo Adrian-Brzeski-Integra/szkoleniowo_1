@@ -28,6 +28,15 @@ $hpl_element_height: 50.5px;
               line-height: 2.75;
               height: $hpl_element_height;
             }
+
+            .arrow {
+              position: absolute;
+              right: 15px;
+
+              &--down {
+                transform: rotate(180deg);
+              }
+            }
           }
         }
       }
