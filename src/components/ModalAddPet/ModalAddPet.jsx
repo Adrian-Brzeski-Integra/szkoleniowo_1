@@ -114,6 +114,12 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
                             variant="outlined"
                             value={tempFood}
                             onChange={(e) => setTempFood(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault()
+                                    handleAddFood()
+                                }
+                            }}
                         />
                         <Button
                             onClick={() => handleAddFood()}
