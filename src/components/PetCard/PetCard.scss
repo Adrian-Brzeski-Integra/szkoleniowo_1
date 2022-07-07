@@ -17,6 +17,8 @@ $petInfo_height: 200px;
       @media only screen and (min-width: 570px) {
         height: $petInfo_height;
         width: auto;
+        max-width: 300px;
+        width: 50%;
       }
     }
 
@@ -28,6 +30,7 @@ $petInfo_height: 200px;
         row-gap: 0.3rem;
         font-size: 1.1rem;
         min-height: $petInfo_height;
+        max-width: 50%;
 
         div {
           margin-top: auto;

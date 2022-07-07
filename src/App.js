@@ -29,8 +29,6 @@ const App = () => {
         setPets({pets: petClone})
     }
 
-    console.log(pets)
-
     useEffect(() => {
         fetch('https://raw.githubusercontent.com/Nemethe/zadanie-rekrutacyjne-react/master/json-example/pets-data.json')
             .then((resp) => resp.json())
@@ -41,7 +39,7 @@ const App = () => {
     }, [])
 
     return (
-        <Container fixed id="App">
+        <Container maxWidth='md' id="App">
             {pets.pets.length > 0 ? (
                 <>
                     <HeaderPetList
