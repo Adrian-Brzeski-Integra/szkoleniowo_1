@@ -4,8 +4,8 @@ import './PetCard.scss'
 import CloseIcon from '@mui/icons-material/Close'
 import Button from '@mui/material/Button'
 
-const PetCard = ({petInfo, killPet}) => {
-    const { photo } = petInfo
+const PetCard = ( {petInfo, killPet} ) => {
+    const {photo} = petInfo
     return (
         <div className="petInfo__container">
             <img src={photo} alt="Pet photo"/>
@@ -18,14 +18,14 @@ const PetCard = ({petInfo, killPet}) => {
                         <div>
                             <span>Ulubione jedzenie:</span>
                             <ul>
-                                { petInfo.favFoods.map((food, index) => <li key={index}>{food}</li>) }
+                                {petInfo.favFoods.map( ( food, index ) => <li key={index} dangerouslySetInnerHTML={{__html: food}}></li> )}
                             </ul>
                         </div>
                     )
                 }
             </div>
             <Button
-                onClick={() => killPet(petInfo)}
+                onClick={() => killPet( petInfo )}
                 className="btn--del"
                 variant="contained"
                 color="error">

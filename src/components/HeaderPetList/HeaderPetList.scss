@@ -1,4 +1,4 @@
-$hpl_element_height: 50.5px;
+@import "./src/assets/style/variables.scss";
 
 .headerPetList {
   &__container {
@@ -14,49 +14,22 @@ $hpl_element_height: 50.5px;
       margin: 1rem 0;
     }
 
-    .sortList {
-      &__container {
-        .btn {
-          &__box {
-            display: flex;
-            flex-wrap: wrap;
-            row-gap: 1rem;
-            column-gap: 1rem;
-
-            button {
-              width: 120px;
-              line-height: 2.75;
-              height: $hpl_element_height;
-            }
-
-            .arrow {
-              position: absolute;
-              right: 15px;
-              display: none;
-              &--active{
-                display: block;
-              }
-              &--down {
-                transform: rotate(180deg);
-              }
-            }
-          }
-        }
-      }
-    }
-
     .filterList {
       &__container {
         display: flex;
         flex-direction: column;
-        width: 200px;
-        @media only screen and (min-width: 504px) {
+        width: 150px;
+        @media only screen and (min-width: 470px) {
           align-items: flex-end;
         }
 
         div {
           margin: 0;
-          height: $hpl_element_height;
+          height: $header_inputs_height;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
         }
       }
     }

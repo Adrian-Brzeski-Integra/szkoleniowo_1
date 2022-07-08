@@ -7,62 +7,38 @@ import './ModalAddPet.scss'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import uniqueKey from '../../helpers/uniqueKey'
+import randomGeneratos from '../../helpers/RandomGenerators/RandomGeneratos'
+import petHandler from '../../helpers/PetHandler/PetHandler'
+import formsHelper from '../../helpers/FormsHelper'
 
-const ModalAddPet = ({open, setOpen, addPet}) => {
-    const [tempFood, setTempFood] = useState('')
-    const [food, setFood] = useState([])
-    const [age, setAge] = useState({text: 'Wiek', status: false})
+const ModalAddPet = ( {open, setOpen, addPet} ) => {
+    const [tempFood, setTempFood] = useState( '' )
+    const [food, setFood] = useState( [] )
+    const [age, setAge] = useState( {text: '', status: false, value: ''} )
 
     const stateReset = () => {
-        setTempFood('')
-        setFood([])
-        setAge({text: 'Wiek', status: false})
+        setTempFood( '' )
+        setFood( [] )
+        setAge( {text: '', status: false, value: ''} )
     }
 
     const handleClose = () => {
         stateReset()
-        setOpen(false)
+        setOpen( false )
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = ( e ) => {
         e.preventDefault()
-        addPet(createPet(e))
+        addPet( petHandler.createPet( e, food ) )
         e.target.reset()
         handleClose()
     }
 
-    const createPet = (e) => {
-        const currentYear = new Date().getFullYear()
-        const newPet = {}
-        newPet.birthYear = currentYear - e.target.fAge.value
-        newPet.name = e.target.fName.value
-        newPet.species = e.target.fSpecies.value
-        newPet.photo = e.target.fPhoto.value
-        if (food.length > 0) newPet.favFoods = food
-        return newPet
-    }
-
-    const handleAddFood = () => {
-        if (tempFood.length > 0) {
-            const cloneFood = [...food]
-            cloneFood.push(tempFood)
-            setFood(cloneFood)
-            setTempFood('')
-        }
-    }
-
-    const removeFood = (index) => {
-        const cloneFood = [...food]
-        cloneFood.splice(index, 1)
-        setFood(cloneFood)
-    }
-
-    const ageValidation = (e) => {
-        if (!Number.isInteger(Number(e.target.value))) {
-            setAge({text: 'Wiek musi być liczbą całkowitą', status: true})
-        } else setAge({text: 'Wiek', status: false})
-    }
+    // const ageValidation = ( e ) => {
+    //     if ( !Number.isInteger( Number( e.target.value ) ) ) {
+    //         setAge( {text: 'Wiek musi być liczbą całkowitą', status: true} )
+    //     } else setAge( {text: '', status: false} )
+    // }
 
     return (
         <Modal
@@ -72,8 +48,8 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
             aria-describedby="modal-form to add pet"
         >
             <Box id="addPetContainer">
-                <form onSubmit={(e) => {
-                    handleSubmit(e)
+                <form onSubmit={( e ) => {
+                    handleSubmit( e )
                 }}>
                     <TextField
                         required
@@ -84,13 +60,17 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
                     />
                     <TextField
                         required
-                        type="number"
                         id="fAge"
                         name="fAge"
-                        label={age.text}
+                        label="Wiek"
+                        helperText={age.text}
                         variant="outlined"
                         error={age.status}
-                        onChange={(e) => ageValidation(e)}
+                        value={age.value}
+                        onChange={( e ) => {
+                            const newAge = {...age, value: formsHelper.validations.age( e )}
+                            setAge( newAge )
+                        }}
                     />
                     <TextField
                         required
@@ -113,34 +93,34 @@ const ModalAddPet = ({open, setOpen, addPet}) => {
                             label="Jedzenie"
                             variant="outlined"
                             value={tempFood}
-                            onChange={(e) => setTempFood(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
+                            onChange={( e ) => setTempFood( e.target.value )}
+                            onKeyDown={( e ) => {
+                                if ( e.key === 'Enter' ) {
                                     e.preventDefault()
-                                    handleAddFood()
+                                    petHandler.addFood( tempFood, setTempFood, food, setFood )
                                 }
                             }}
                         />
                         <Button
-                            onClick={() => handleAddFood()}
+                            onClick={() => petHandler.addFood( tempFood, setTempFood, food, setFood )}
                             id="fAddFood"
                             variant="contained">
                             <AddIcon/>
                         </Button>
                     </div>
                     {food.length > 0 && <ul>
-                        {food.map((item, index) => {
+                        {food.map( ( item, index ) => {
                             return (
-                                <li key={uniqueKey()}>
+                                <li key={randomGeneratos.uniqueKey()}>
                                     {item}
                                     <Button variant="contained"
                                             color="error"
-                                            onClick={() => removeFood(index)}>
+                                            onClick={() => petHandler.removeFood( index, food, setFood )}>
                                         <RemoveIcon/>
                                     </Button>
                                 </li>
                             )
-                        })}</ul>}
+                        } )}</ul>}
                     <div className="btn__box">
                         <Button variant="contained" type="submit">DODAJ</Button>
                     </div>

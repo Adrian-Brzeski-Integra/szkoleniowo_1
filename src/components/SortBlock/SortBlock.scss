@@ -1,0 +1,33 @@
+@import "../../assets/style/variables";
+
+.sortList {
+  &__container {
+    margin-right: 1rem;
+    .btn {
+      &__box {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 1rem;
+        column-gap: 1rem;
+
+        button {
+          width: 120px;
+          line-height: 2.75;
+          height: $header_inputs_height;
+        }
+
+        .arrow {
+          position: absolute;
+          right: 15px;
+          display: none;
+          &--active{
+            display: block;
+          }
+          &--down {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,37 +6,37 @@ import PetCard from './components/PetCard/PetCard'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import ModalAddPet from './components/ModalAddPet/ModalAddPet'
-import uniqueKey from './helpers/uniqueKey'
 import listHelper from './helpers/ListHelper/ListHelper'
+import randomGeneratos from './helpers/RandomGenerators/RandomGeneratos'
 
 const App = () => {
-    const [pets, setPets] = useState({pets: []})
-    const [sortMethod, setSortMethod] = useState('age_up')
-    const [filterItems, setFilterItems] = useState([])
-    const [open, setOpen] = React.useState(false)
+    const [pets, setPets] = useState( {pets: []} )
+    const [sortMethod, setSortMethod] = useState( 'age_up' )
+    const [filterItems, setFilterItems] = useState( [] )
+    const [open, setOpen] = React.useState( false )
 
-    const handleOpen = () => setOpen(true)
+    const handleOpen = () => setOpen( true )
 
-    const killPet = (pet) => {
+    const killPet = ( pet ) => {
         const petClone = [...pets.pets]
-        petClone.splice(pets.pets.indexOf(pet), 1)
-        setPets({pets: petClone})
+        petClone.splice( pets.pets.indexOf( pet ), 1 )
+        setPets( {pets: petClone} )
     }
 
-    const addPet = (pet) => {
+    const addPet = ( pet ) => {
         const petClone = [...pets.pets]
-        petClone.push(pet)
-        setPets({pets: petClone})
+        petClone.push( pet )
+        setPets( {pets: petClone} )
     }
 
-    useEffect(() => {
-        fetch('https://raw.githubusercontent.com/Nemethe/zadanie-rekrutacyjne-react/master/json-example/pets-data.json')
-            .then((resp) => resp.json())
-            .then(setPets.bind(this))
-            .catch((error) => {
-                console.log('There was an error!', error)
-            })
-    }, [])
+    useEffect( () => {
+        fetch( 'https://raw.githubusercontent.com/Nemethe/zadanie-rekrutacyjne-react/master/json-example/pets-data.json' )
+            .then( ( resp ) => resp.json() )
+            .then( setPets.bind( this ) )
+            .catch( ( error ) => {
+                console.log( 'There was an error!', error )
+            } )
+    }, [] )
 
     return (
         <Container maxWidth="md" id="App">
@@ -49,10 +49,10 @@ const App = () => {
                         sort={sortMethod}
                     />
                     {
-                        listHelper.listSort(listHelper.listFilter(pets.pets, filterItems, 'species'), sortMethod)
-                            .map((pet) => {
-                                return <PetCard key={uniqueKey()} petInfo={pet} killPet={killPet}/>
-                            })
+                        listHelper.listSort( listHelper.listFilter( pets.pets, filterItems, 'species' ), sortMethod )
+                            .map( ( pet ) => {
+                                return <PetCard key={randomGeneratos.uniqueKey()} petInfo={pet} killPet={killPet}/>
+                            } )
                     }
                     <Button
                         onClick={() => handleOpen()}

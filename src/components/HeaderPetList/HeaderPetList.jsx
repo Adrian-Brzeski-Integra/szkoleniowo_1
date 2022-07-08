@@ -1,10 +1,10 @@
 import React from 'react'
 import './HeaderPetList.scss'
-import MultipleSelectChip from './items/MultipleSelectChip'
 import PropTypes from 'prop-types'
-import SortBlock from '../common/SortBlock'
+import SortBlock from '../SortBlock/SortBlock'
+import SelectCheckmarks from '../common/SelectCheckmarks'
 
-const HeaderPetList = ({petList, setFilter, setSort}) => {
+const HeaderPetList = ( {petList, setFilter, setSort} ) => {
     const sortKeys = [
         {key: 'birthYear', desc: 'WIEK'},
         {key: 'name', desc: 'IMIE'}
@@ -14,10 +14,11 @@ const HeaderPetList = ({petList, setFilter, setSort}) => {
             <SortBlock setSort={setSort} sortKeys={sortKeys}/>
             <div className="filterList__container">
                 <h4>Filtry</h4>
-                <MultipleSelectChip
+                <SelectCheckmarks
+                    optionsList={[...new Set( petList?.map( ( pet ) => pet?.species ) )]}
                     name="Gatunki"
-                    list={[...new Set(petList?.map((pet) => pet?.species))]}
-                    setFilter={setFilter}
+                    multiple={true}
+                    returnValue={setFilter}
                 />
             </div>
         </div>
