@@ -1,4 +1,4 @@
-@import './src/style/mixins.scss';
+@import '../../assets/style/mixins.scss';
 
 $petInfo_height: 200px;
 
@@ -9,11 +9,10 @@ $petInfo_height: 200px;
     position: relative;
     padding: 4px 42px 4px 4px;
     border: 1px solid black;
-    margin-top: 0.5rem;
+    margin-top: .5rem;
 
     img {
       width: 100%;
-
       @media only screen and (min-width: 570px) {
         height: $petInfo_height;
         width: auto;

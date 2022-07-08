@@ -5,21 +5,23 @@ import CloseIcon from '@mui/icons-material/Close'
 import Button from '@mui/material/Button'
 
 const PetCard = ({petInfo, killPet}) => {
+    const { photo } = petInfo
     return (
         <div className="petInfo__container">
-            <img src={petInfo.photo} alt="Pet photo"/>
+            <img src={photo} alt="Pet photo"/>
             <div className="petData__box">
                 <span>Imię: {petInfo.name}</span>
                 <span>Wiek: {new Date().getFullYear() - petInfo.birthYear} lat</span>
                 <span>Gatunek: {petInfo.species}</span>
-                {petInfo.favFoods && <div>
-                    <span>Ulubione jedzenie:</span>
-                    <ul>
-                        {petInfo.favFoods.map((food) => {
-                            return <li key={food}>{food}</li>
-                        })}
-                    </ul>
-                </div>
+                {
+                    petInfo?.favFoods && (
+                        <div>
+                            <span>Ulubione jedzenie:</span>
+                            <ul>
+                                { petInfo.favFoods.map((food, index) => <li key={index}>{food}</li>) }
+                            </ul>
+                        </div>
+                    )
                 }
             </div>
             <Button

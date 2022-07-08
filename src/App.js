@@ -5,10 +5,9 @@ import HeaderPetList from './components/HeaderPetList/HeaderPetList'
 import PetCard from './components/PetCard/PetCard'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
-import petListFilter from './helpers/petListFilter'
-import petListSort from './helpers/petListSort'
 import ModalAddPet from './components/ModalAddPet/ModalAddPet'
 import uniqueKey from './helpers/uniqueKey'
+import listHelper from './helpers/ListHelper/ListHelper'
 
 const App = () => {
     const [pets, setPets] = useState({pets: []})
@@ -50,7 +49,7 @@ const App = () => {
                         sort={sortMethod}
                     />
                     {
-                        petListSort(petListFilter(pets.pets, filterItems), sortMethod)
+                        listHelper.listSort(listHelper.listFilter(pets.pets, filterItems, 'species'), sortMethod)
                             .map((pet) => {
                                 return <PetCard key={uniqueKey()} petInfo={pet} killPet={killPet}/>
                             })
@@ -70,7 +69,7 @@ const App = () => {
                     <Button
                         onClick={() => handleOpen()}
                         variant="contained">
-                       <h3>Add pet</h3> <AddIcon/>
+                        <h3>Add pet</h3> <AddIcon/>
                     </Button>
                 </>
             )}

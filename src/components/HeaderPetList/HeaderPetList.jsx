@@ -1,51 +1,22 @@
 import React from 'react'
-import Button from '@mui/material/Button'
 import './HeaderPetList.scss'
 import MultipleSelectChip from './items/MultipleSelectChip'
 import PropTypes from 'prop-types'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import SortBlock from '../common/SortBlock'
 
-const HeaderPetList = ({petList, setFilter, setSort, sort}) => {
-    const handleBtn = (e) => {
-        const clickedBtn = e.target.id
-        if (clickedBtn === 'ageBtn') {
-            if (sort === 'age_up') setSort('age_down')
-            else setSort('age_up')
-        } else {
-            if (clickedBtn === 'nameBtn') {
-                if (sort === 'name_up') setSort('name_down')
-                else setSort('name_up')
-            }
-        }
-    }
+const HeaderPetList = ({petList, setFilter, setSort}) => {
+    const sortKeys = [
+        {key: 'birthYear', desc: 'WIEK'},
+        {key: 'name', desc: 'IMIE'}
+    ]
     return (
         <div className="headerPetList__container">
-            <div className="sortList__container">
-                <h4>Sortowanie</h4>
-                <div className="btn__box">
-                    <Button
-                        id="ageBtn"
-                        onClick={(e) => handleBtn(e)}
-                        variant="contained">
-                        WIEK
-                        {sort === 'age_up' && <ArrowUpwardIcon className="arrow"/>}
-                        {sort === 'age_down' && <ArrowUpwardIcon className="arrow arrow--down"/>}
-                    </Button>
-                    <Button
-                        id="nameBtn"
-                        onClick={(e) => handleBtn(e)}
-                        variant="contained">
-                        IMIE
-                        {sort === 'name_up' && <ArrowUpwardIcon className="arrow"/>}
-                        {sort === 'name_down' && <ArrowUpwardIcon className="arrow arrow--down"/>}
-                    </Button>
-                </div>
-            </div>
+            <SortBlock setSort={setSort} sortKeys={sortKeys}/>
             <div className="filterList__container">
                 <h4>Filtry</h4>
                 <MultipleSelectChip
-                    name={'Gatunki'}
-                    list={[...new Set(petList.map((pet) => pet.species))]}
+                    name="Gatunki"
+                    list={[...new Set(petList?.map((pet) => pet?.species))]}
                     setFilter={setFilter}
                 />
             </div>
@@ -56,8 +27,7 @@ const HeaderPetList = ({petList, setFilter, setSort, sort}) => {
 HeaderPetList.propTypes = {
     petList: PropTypes.array.isRequired,
     setFilter: PropTypes.func.isRequired,
-    setSort: PropTypes.func.isRequired,
-    sort: PropTypes.string.isRequired
+    setSort: PropTypes.func.isRequired
 }
 
 export default HeaderPetList

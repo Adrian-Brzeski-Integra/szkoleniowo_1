@@ -32,7 +32,10 @@ $hpl_element_height: 50.5px;
             .arrow {
               position: absolute;
               right: 15px;
-
+              display: none;
+              &--active{
+                display: block;
+              }
               &--down {
                 transform: rotate(180deg);
               }
