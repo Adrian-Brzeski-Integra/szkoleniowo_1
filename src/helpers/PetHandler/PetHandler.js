@@ -5,7 +5,8 @@ export default {
         newPet.birthYear = currentYear - e.target.fAge.value
         newPet.name = e.target.fName.value
         newPet.species = e.target.fSpecies.value
-        newPet.photo = e.target.fPhoto.value
+        if ( e.target.fPhoto.value.length > 0 ) newPet.photo = e.target.fPhoto.value
+        else newPet.photo = 'https://cdn-icons-png.flaticon.com/512/4322/4322991.png'
         if ( food.length > 0 ) newPet.favFoods = food
         return newPet
     },

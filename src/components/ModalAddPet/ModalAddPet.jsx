@@ -10,6 +10,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import randomGeneratos from '../../helpers/RandomGenerators/RandomGeneratos'
 import petHandler from '../../helpers/PetHandler/PetHandler'
 import formsHelper from '../../helpers/FormsHelper'
+import CloseIcon from '@mui/icons-material/Close'
 
 const ModalAddPet = ( {open, setOpen, addPet} ) => {
     const [tempFood, setTempFood] = useState( '' )
@@ -20,7 +21,7 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
             error: false
         },
         photo: {
-            text: '15',
+            text: '',
             error: false
         }
     } )
@@ -52,12 +53,6 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
         handleClose()
     }
 
-    // const ageValidation = ( e ) => {
-    //     if ( !Number.isInteger( Number( e.target.value ) ) ) {
-    //         setAge( {text: 'Wiek musi być liczbą całkowitą', status: true} )
-    //     } else setAge( {text: '', status: false} )
-    // }
-
     return (
         <Modal
             open={open}
@@ -69,6 +64,13 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
                 <form onSubmit={( e ) => {
                     handleSubmit( e )
                 }}>
+                    <Button
+                        onClick={() => handleClose()}
+                        className="btn--close"
+                        variant="contained"
+                        color="error">
+                        <CloseIcon/>
+                    </Button>
                     <TextField
                         required
                         id="fName"
