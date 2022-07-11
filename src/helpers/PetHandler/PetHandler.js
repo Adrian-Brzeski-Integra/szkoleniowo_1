@@ -1,5 +1,6 @@
 export default {
     createPet: ( e, food ) => {
+        console.log( e )
         const currentYear = new Date().getFullYear()
         const newPet = {}
         newPet.birthYear = currentYear - e.target.fAge.value

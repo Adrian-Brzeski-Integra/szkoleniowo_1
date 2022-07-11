@@ -49,7 +49,7 @@ const App = () => {
                         sort={sortMethod}
                     />
                     {
-                        listHelper.listSort( listHelper.listFilter( pets.pets, filterItems, 'species' ), sortMethod )
+                        listHelper?.listSort( listHelper.listFilter( pets.pets, filterItems, 'species' ), sortMethod )
                             .map( ( pet ) => {
                                 return <PetCard key={randomGeneratos.uniqueKey()} petInfo={pet} killPet={killPet}/>
                             } )

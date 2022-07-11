@@ -1,6 +1,5 @@
 import React from 'react'
 import TextField from '@mui/material/TextField'
-import formsHelper from '../../helpers/FormsHelper'
 import petHandler from '../../helpers/PetHandler/PetHandler'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
@@ -8,6 +7,7 @@ import randomGeneratos from '../../helpers/RandomGenerators/RandomGeneratos'
 import RemoveIcon from '@mui/icons-material/Remove'
 import PropTypes from 'prop-types'
 import './AddPetForm.scss'
+import {useFormik} from 'formik'
 
 const AddPetForm = ( {
                          food,
@@ -18,104 +18,111 @@ const AddPetForm = ( {
                          setErrorStatus,
                          tempFood,
                          setTempFood
-} ) => {
-    const handleSubmit = ( e ) => {
-        e.preventDefault()
-        addPet( petHandler.createPet( e, food ) )
-        e.target.reset()
+                     } ) => {
+    const formik = useFormik( {
+        initialValues: {
+            fName: '',
+            fAge: 1,
+            fSpecies: '',
+            fPhoto: '',
+            fFood: []
+        },
+        onSubmit: ( values ) => {
+            console.log( values )
+            handleSubmit( values )
+        }
+    } )
+
+    const handleSubmit = ( values ) => {
+        addPet( petHandler.createPet( values, food ) )
+        // e.target.reset()
         handleClose()
     }
 
     return (
-            <div id="addPetContainer">
-                <form onSubmit={( e ) => {
-                    handleSubmit( e )
-                }}>
+        <div id="addPetContainer">
+            <form onSubmit={formik.handleSubmit}>
+                <TextField
+                    required
+                    id="fName"
+                    name="fName"
+                    label="Imię"
+                    variant="outlined"
+                    value={formik.values.fName}
+                    onChange={formik.handleChange}
+                />
+                <TextField
+                    required
+                    id="fAge"
+                    name="fAge"
+                    label="Wiek"
+                    type="number"
+                    helperText={errorStatus.age.text}
+                    variant="outlined"
+                    error={errorStatus.age.error}
+                    inputProps={{min: 1}}
+                    onChange={formik.handleChange}
+                    value={formik.values.fAge}
+                />
+                <TextField
+                    required
+                    id="fSpecies"
+                    name="fSpecies"
+                    label="Gatunek"
+                    variant="outlined"
+                    value={formik.values.fSpecies}
+                    onChange={formik.handleChange}
+                />
+                <TextField
+                    id="fPhoto"
+                    name="fPhoto"
+                    label="Url zdjęcia"
+                    variant="outlined"
+                    helperText={errorStatus.photo.text}
+                    error={errorStatus.photo.error}
+                    value={formik.values.fPhoto}
+                    onChange={formik.handleChange}
+                />
+                <div id="foodInput__container">
                     <TextField
-                        required
-                        id="fName"
-                        name="fName"
-                        label="Imię"
+                        id="fFood"
+                        name="fFood"
+                        label="Jedzenie"
                         variant="outlined"
-                    />
-                    <TextField
-                        required
-                        id="fAge"
-                        name="fAge"
-                        label="Wiek"
-                        type="number"
-                        helperText={errorStatus.age.text}
-                        variant="outlined"
-                        error={errorStatus.age.error}
-                        defaultValue={1}
-                        inputProps={{min: 1}}
-                        onChange={( e ) => {
-                            const newErrorStatus = {...errorStatus, age: formsHelper.validations.age( e )}
-                            setErrorStatus( newErrorStatus )
+                        value={formik.values.fFood}
+                        onChange={formik.handleChange}
+                        onKeyDown={( e ) => {
+                            if ( e.key === 'Enter' ) {
+                                e.preventDefault()
+                                petHandler.addFood( tempFood, setTempFood, food, setFood )
+                            }
                         }}
-                        onBlur={( e ) => {
-                            const newErrorStatus = {...errorStatus, age: formsHelper.validations.age( e )}
-                            setErrorStatus( newErrorStatus )
-                        }}
                     />
-                    <TextField
-                        required
-                        id="fSpecies"
-                        name="fSpecies"
-                        label="Gatunek"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="fPhoto"
-                        name="fPhoto"
-                        label="Url zdjęcia"
-                        variant="outlined"
-                        helperText={errorStatus.photo.text}
-                        error={errorStatus.photo.error}
-                        onBlur={( e ) => {
-                            const newErrorStatus = {...errorStatus, photo: formsHelper.validations.photo( e )}
-                            setErrorStatus( newErrorStatus )
-                        }} />
-                    <div id="foodInput__container">
-                        <TextField
-                            id="fFood"
-                            name="fFood"
-                            label="Jedzenie"
-                            variant="outlined"
-                            value={tempFood}
-                            onChange={( e ) => setTempFood( e.target.value )}
-                            onKeyDown={( e ) => {
-                                if ( e.key === 'Enter' ) {
-                                    e.preventDefault()
-                                    petHandler.addFood( tempFood, setTempFood, food, setFood )
-                                }
-                            }}
-                        />
-                        <Button
-                            onClick={() => petHandler.addFood( tempFood, setTempFood, food, setFood )}
-                            id="fAddFood"
-                            variant="contained">
-                            <AddIcon/>
-                        </Button>
-                    </div>
-                    {food.length > 0 && <ul>
-                        {food.map( ( item, index ) => {
-                            return (
-                                <li key={randomGeneratos.uniqueKey()}>
-                                    {item}
-                                    <Button variant="contained"
-                                            color="error"
-                                            onClick={() => petHandler.removeFood( index, food, setFood )}>
-                                        <RemoveIcon/>
-                                    </Button>
-                                </li>
-                            )
-                        } )}</ul>}
-                    <div className="btn__box">
-                        <Button variant="contained" type="submit">DODAJ</Button>
-                    </div>
-                </form>
-            </div>
+                    <Button
+                        onClick={() => petHandler.addFood( tempFood, setTempFood, food, setFood )}
+                        id="fAddFood"
+                        variant="contained">
+                        <AddIcon/>
+                    </Button>
+                </div>
+                {food.length > 0 && <ul>
+                    {food.map( ( item, index ) => {
+                        return (
+                            <li key={randomGeneratos.uniqueKey()}>
+                                {item}
+                                <Button variant="contained"
+                                        color="error"
+                                        onClick={() => petHandler.removeFood( index, food, setFood )}>
+                                    <RemoveIcon/>
+                                </Button>
+                            </li>
+                        )
+                    } )}</ul>}
+                <div className="btn__box">
+                    <Button variant="contained" type="submit">DODAJ</Button>
+                </div>
+            </form>
+        </div>
     )
 }
 

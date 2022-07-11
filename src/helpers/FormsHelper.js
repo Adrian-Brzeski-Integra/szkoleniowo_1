@@ -1,29 +1,23 @@
 const formsHelper = {
     validations: {
-        age: ( e ) => {
-            console.log( e.target.value )
-            let errorMsg = ''
-            let errorState = false
-            if ( !/^[0-9]+$/.test( e.target.value ) ) {
+        age: ( val ) => {
+            console.log( val )
+            let errorMsg
+            if ( !/^[0-9]+$/.test( val ) ) {
                 errorMsg = 'Zły wiek!'
-                errorState = true
             }
-            return {text: errorMsg, error: errorState}
+            return errorMsg
         },
-        photo: ( e ) => {
-            let errorMsg = ''
-            let errorState = false
-            if ( e.target.value.length === 0 ) {
-                errorMsg = ''
-                errorState = false
-            } else if ( !formsHelper.validations.common.url( e.target.value ) ) {
+        photo: ( photoUrl ) => {
+            let errorMsg
+            if ( photoUrl.length === 0 ) {
+                errorMsg = undefined
+            } else if ( !formsHelper.validations.common.url( photoUrl ) ) {
                 errorMsg = 'Złe źródło!'
-                errorState = true
-            } else if ( !formsHelper.validations.common.findExtensions( e.target.value, ['.jpg', '.jpeg', '.png', '.svg'] ) ) {
+            } else if ( !formsHelper.validations.common.findExtensions( photoUrl, ['.jpg', '.jpeg', '.png', '.svg'] ) ) {
                 errorMsg = 'Zły format pliku!'
-                errorState = true
             }
-            return {text: errorMsg, error: errorState}
+            return errorMsg
         },
         common: {
             url: ( urlString ) => {
@@ -38,10 +32,8 @@ const formsHelper = {
             findExtensions: ( iString, extensions ) => {
                 let extensionFound = false
                 extensions.every( ( extension ) => {
-                    if ( iString.search( extension ) !== -1 ) {
-                        extensionFound = true
-                        return false
-                    } else return true
+                    if ( iString.search( extension ) !== -1 ) extensionFound = true
+                    return true
                 } )
                 return extensionFound
             }
