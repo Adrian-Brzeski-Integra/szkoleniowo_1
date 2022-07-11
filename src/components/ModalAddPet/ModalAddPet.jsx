@@ -14,12 +14,30 @@ import formsHelper from '../../helpers/FormsHelper'
 const ModalAddPet = ( {open, setOpen, addPet} ) => {
     const [tempFood, setTempFood] = useState( '' )
     const [food, setFood] = useState( [] )
-    const [age, setAge] = useState( {text: '', status: false, value: ''} )
+    const [errorStatus, setErrorStatus] = useState( {
+        age: {
+            text: '',
+            error: false
+        },
+        photo: {
+            text: '15',
+            error: false
+        }
+    } )
 
     const stateReset = () => {
         setTempFood( '' )
         setFood( [] )
-        setAge( {text: '', status: false, value: ''} )
+        setErrorStatus( {
+            age: {
+                text: '',
+                error: false
+            },
+            photo: {
+                text: '',
+                error: false
+            }
+        } )
     }
 
     const handleClose = () => {
@@ -63,13 +81,19 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
                         id="fAge"
                         name="fAge"
                         label="Wiek"
-                        helperText={age.text}
+                        type="number"
+                        helperText={errorStatus.age.text}
                         variant="outlined"
-                        error={age.status}
-                        value={age.value}
+                        error={errorStatus.age.error}
+                        defaultValue={1}
+                        inputProps={{min: 1}}
                         onChange={( e ) => {
-                            const newAge = {...age, value: formsHelper.validations.age( e )}
-                            setAge( newAge )
+                            const newErrorStatus = {...errorStatus, age: formsHelper.validations.age( e )}
+                            setErrorStatus( newErrorStatus )
+                        }}
+                        onBlur={( e ) => {
+                            const newErrorStatus = {...errorStatus, age: formsHelper.validations.age( e )}
+                            setErrorStatus( newErrorStatus )
                         }}
                     />
                     <TextField
@@ -80,12 +104,16 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
                         variant="outlined"
                     />
                     <TextField
-                        required
                         id="fPhoto"
                         name="fPhoto"
                         label="Url zdjęcia"
                         variant="outlined"
-                    />
+                        helperText={errorStatus.photo.text}
+                        error={errorStatus.photo.error}
+                        onBlur={( e ) => {
+                            const newErrorStatus = {...errorStatus, photo: formsHelper.validations.photo( e )}
+                            setErrorStatus( newErrorStatus )
+                        }} />
                     <div id="foodInput__container">
                         <TextField
                             id="fFood"
