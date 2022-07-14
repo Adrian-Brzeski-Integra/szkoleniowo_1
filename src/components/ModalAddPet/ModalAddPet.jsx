@@ -5,6 +5,7 @@ import './ModalAddPet.scss'
 import Button from '@mui/material/Button'
 import CloseIcon from '@mui/icons-material/Close'
 import AutoForm from '../AutoForm'
+import formsHelper from '../../helpers/FormsHelper'
 
 const ModalAddPet = ( {open, setOpen, addPet} ) => {
     // const [tempFood, setTempFood] = useState( '' )
@@ -75,7 +76,9 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
                             age: {
                                 type: 'number',
                                 label: 'Wiek',
-                                required: true
+                                required: true,
+                                validateMethod: formsHelper.validations.age,
+                                minValue: 1
                             },
                             species: {
                                 type: 'text',
@@ -85,7 +88,8 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
                             photo: {
                                 type: 'text',
                                 label: 'Url zdjęcia',
-                                required: false
+                                required: false,
+                                validateMethod: formsHelper.validations.photo
                             }
                         }
                     }

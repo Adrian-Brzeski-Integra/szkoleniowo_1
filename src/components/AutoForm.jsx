@@ -1,58 +1,45 @@
 import React, {useEffect, useState} from 'react'
 import {Form, Formik} from 'formik'
-import TextField from '@mui/material/TextField'
 import PropTypes from 'prop-types'
 import Button from '@mui/material/Button'
-import formsHelper from '../helpers/FormsHelper'
+import FormsHelper from '../helpers/FormsHelper'
 
 const AutoForm = ( {autoFormData} ) => {
     const [fData, setFData] = useState( {} )
+    const [fDataValidate, setFDataValidate] = useState( {} )
+
     useEffect( () => {
         const tempFormData = {}
         Object.keys( autoFormData ).forEach( ( key ) => {
             tempFormData[key] = ''
         } )
         setFData( tempFormData )
+        const tempFormDataValidate = {}
+        Object.values( autoFormData ).forEach( ( item, index ) => {
+            if ( item?.validateMethod ) {
+                tempFormDataValidate[Object.keys( autoFormData )[index]] = item.validateMethod
+            }
+        } )
+        setFDataValidate( tempFormDataValidate )
     }, [] )
     return (
         <Formik initialValues={fData}
                 validate={( values ) => {
                     const errors = {}
-                    if ( !values.name ) {
-                        errors.name = 'Required'
-                    }
-                    if ( values.photo ) {
-                        errors.photo = formsHelper.validations.photo( values?.photo )
-                    }
-                    if ( values.age ) {
-                        errors.age = formsHelper.validations.age( values?.age )
-                    }
+                    Object.values( fDataValidate ).forEach( ( item, index ) => {
+                        const keyName = Object.keys( fDataValidate )[index]
+                        if ( values[keyName] ) errors[keyName] = item( values[keyName] )
+                    } )
                     return errors
                 }}
                 onSubmit={values => {
                     console.log( values )
                 }}>
             {( {values, touched, errors, handleChange, handleBlur, isValid} ) => (
-                <Form autoComplete='off'>
+                <Form>
                     {
                         Object.values( autoFormData ).map( ( item, index ) => {
-                            const {type, label, required} = item
-                            const name = Object.keys( autoFormData )[index]
-                            return (
-                                <TextField
-                                    key={label}
-                                    required={required}
-                                    name={name}
-                                    label={label}
-                                    variant="outlined"
-                                    type={type}
-                                    value={values[name]}
-                                    helperText={touched[name] ? errors[name] : ''}
-                                    error={Boolean( errors[name] )}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                />
-                            )
+                            return FormsHelper.buildField( item, index, autoFormData, values, touched, errors, handleChange, handleBlur )
                         } )
                     }
                     <Button
@@ -62,7 +49,6 @@ const AutoForm = ( {autoFormData} ) => {
                     >
                         submit
                     </Button>
-
                 </Form>
             )}
         </Formik>
