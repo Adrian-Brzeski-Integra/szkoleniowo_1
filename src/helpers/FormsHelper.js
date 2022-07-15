@@ -73,7 +73,20 @@ const formsHelper = {
                                 </Button>
                             </div>
                         } ).filter( ( item, index ) => values[name].length - 1 === index )}
-
+                        {values[name].map( ( item, index ) => {
+                            return ( <div key={name + index}>
+                                {item}{' '}
+                                <Button
+                                    margin="normal"
+                                    type="button"
+                                    color="secondary"
+                                    variant="outlined"
+                                    onClick={() => remove( index )}
+                                >
+                                    x
+                                </Button>
+                            </div> )
+                        } ).filter( ( item, index ) => values[name].length - 1 !== index )}
                     </div>
                 )
                 }
