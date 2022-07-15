@@ -90,6 +90,11 @@ const ModalAddPet = ( {open, setOpen, addPet} ) => {
                                 label: 'Url zdjęcia',
                                 required: false,
                                 validateMethod: formsHelper.validations.photo
+                            },
+                            food: {
+                                type: 'text_array',
+                                label: 'Jedzenie',
+                                required: false
                             }
                         }
                     }
