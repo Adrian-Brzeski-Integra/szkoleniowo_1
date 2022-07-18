@@ -3,6 +3,7 @@ import Button from '@mui/material/Button'
 import {FieldArray} from 'formik'
 
 import React from 'react'
+import TextFieldAF from '../components/common/AutoForm/TextField'
 
 const formsHelper = {
     buildField: ( item, index, fData, values, touched, errors, handleChange, handleBlur ) => {
@@ -10,18 +11,16 @@ const formsHelper = {
         const name = Object.keys( fData )[index]
         let renderField
         if ( type === 'text' ) {
-            renderField = <TextField
-                key={label}
+            return <TextFieldAF
+                label={label}
                 required={required}
                 name={name}
-                label={label}
-                variant="outlined"
                 type={type}
-                value={values[name]}
-                helperText={touched[name] ? errors[name] : ''}
-                error={Boolean( errors[name] )}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                values={values}
+                touched={touched}
+                errors={errors}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
             />
         } else if ( type === 'number' ) {
             const inProps = {}
@@ -66,7 +65,7 @@ const formsHelper = {
                                     type="button"
                                     variant="outlined"
                                     onClick={() => {
-                                        push( '' )
+                                        if ( item.length > 0 ) push( '' )
                                     }}
                                 >
                                     +
@@ -95,6 +94,7 @@ const formsHelper = {
 
         return renderField
     },
+
     validations: {
         age: ( val ) => {
             let errorMsg
